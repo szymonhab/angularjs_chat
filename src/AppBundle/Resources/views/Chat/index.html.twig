@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <script type="text/javascript">
+    var config = {};
+    
+    config.chat = {
+      url_post_message: '{{ path('post_message') }}',
+      url_get_messages: '{{ path('get_messages') }}'
+    }
+  </script>
+
+  <div ng-controller="ChatCtrl">
+    Chat.
+    
+    <div id="chat" style="overflow-y: scroll; height: 250px; width: 500px" ng-init="get()">
+      <ul style="list-style-type: none">
+        <li ng-repeat="message in messages | orderBy:dateAdd.date">
+          {[{ message.id }]}. {[{ message.date }]} {[{ message.personAdd }]}: {[{ message.content }]}
+        </li>
+      </ul>
+    </div>
+    
+    <input ng-model="message"><button ng-click="send(message)">Send</button>
+  </div>
+{% endblock %}
+
+{% block javascripts %}
+  <script src="{{ asset('js/index.js') }}"></script>
+  <script src="{{ asset('js/chat.js') }}"></script>
+{% endblock %}
